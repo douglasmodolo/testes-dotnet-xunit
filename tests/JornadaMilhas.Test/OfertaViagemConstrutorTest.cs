@@ -7,24 +7,16 @@ namespace JornadaMilhas.Test
 {
 	public class OfertaViagemConstrutorTest
 	{
-		public static string NormalizeString(string input)
-		{
-			return input.Normalize(NormalizationForm.FormD)
-						.Where(c => CharUnicodeInfo.GetUnicodeCategory(c) != UnicodeCategory.NonSpacingMark)
-						.Aggregate(new StringBuilder(), (sb, c) => sb.Append(c))
-						.ToString()
-						.Normalize(NormalizationForm.FormC);
-		}
-
-		[Fact]
-		public void OfertaViagem_RotaPeriodoPrecoValidos_DeveSerValida()
+		[Theory]
+		[InlineData("", null, "2025-01-01", "2025-01-02", 0, false)]
+		[InlineData("Origem", "Destino", "2025-01-04", "2025-10-04", 100, true)]
+		[InlineData("Origem", "Destino", "2025-01-04", "2025-10-04", -100, false)]
+		[InlineData("Origem", "Destino", "2025-01-04", "2025-10-04", 0, false)]
+		public void OfertaViagem_DeveValidarRotaPeriodoPrecoCorretamente(string origem, string destino, string dataIda, string dataVolta, double preco, bool validation)
 		{
 			// Arrange
-			Rota rota = new Rota("Origem", "Destino");
-			Periodo periodo = new Periodo(new DateTime(2025, 4, 1), new DateTime(2025, 4, 10));
-			double preco = 100.0;
-
-			var validation = true;
+			Rota rota = new Rota(origem, destino);
+			Periodo periodo = new Periodo(DateTime.Parse(dataIda), DateTime.Parse(dataVolta));
 
 			// Act
 			OfertaViagem oferta = new OfertaViagem(rota, periodo, preco);
