@@ -1,13 +1,13 @@
 name: CI
 
 on:
-  pull_request:
+  push:
     branches:
       - main  # ou o nome do branch de destino do PR
 
 jobs:
   test:
-    runs-on: ubuntu-latest  # Ou outro sistema operacional, conforme necess·rio
+    runs-on: ubuntu-latest  # Ou outro sistema operacional, conforme necess√°rio
 
     steps:
     - name: Checkout code
