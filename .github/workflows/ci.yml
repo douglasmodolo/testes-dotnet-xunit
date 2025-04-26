@@ -3,20 +3,29 @@ name: CI
 on:
   push:
     branches:
-      - main  # ou o nome do branch de destino do PR
+      - main
+  pull_request:
+    branches:
+      - main
 
 jobs:
   test:
-    runs-on: ubuntu-latest  # Ou outro sistema operacional, conforme necessário
+    runs-on: ubuntu-latest
 
     env:
       DOTNET_SYSTEM_GLOBALIZATION_INVARIANT: false
-      LANG: en_US.UTF-8
       LC_ALL: en_US.UTF-8
+      LANG: en_US.UTF-8
 
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
+
+    - name: Install locales
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y locales
+        sudo locale-gen en_US.UTF-8
 
     - name: Set up .NET
       uses: actions/setup-dotnet@v2
@@ -27,7 +36,7 @@ jobs:
       run: dotnet restore
 
     - name: Build the project
-      run: dotnet build
+      run: dotnet build --configuration Release
 
     - name: Run tests
-      run: dotnet test
+      run: dotnet test --configuration Release --no-build
