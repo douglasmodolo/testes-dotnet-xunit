@@ -5,7 +5,7 @@ using System.Text;
 
 namespace JornadaMilhas.Test
 {
-	public class OfertaViagemTest
+	public class OfertaViagemConstrutorTest
 	{
 		public static string NormalizeString(string input)
 		{
