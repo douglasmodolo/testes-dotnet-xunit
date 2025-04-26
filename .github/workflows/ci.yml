@@ -10,22 +10,11 @@ on:
 
 jobs:
   test:
-    runs-on: ubuntu-latest
-
-    env:
-      DOTNET_SYSTEM_GLOBALIZATION_INVARIANT: false
-      LC_ALL: en_US.UTF-8
-      LANG: en_US.UTF-8
+    runs-on: windows-latest
 
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
-
-    - name: Install locales
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y locales
-        sudo locale-gen en_US.UTF-8
 
     - name: Set up .NET
       uses: actions/setup-dotnet@v2
@@ -39,4 +28,4 @@ jobs:
       run: dotnet build --configuration Release
 
     - name: Run tests
-      run: dotnet test --configuration Release --no-build
+      run: dotnet test --configuration Release
