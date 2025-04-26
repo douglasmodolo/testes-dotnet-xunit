@@ -45,8 +45,8 @@ namespace JornadaMilhas.Test
 			OfertaViagem oferta = new OfertaViagem(rota, periodo, preco);
 
 			// Assert
-			Assert.Contains(NormalizeString("A oferta de viagem não possui rota ou período válidos."),
-							NormalizeString(oferta.Erros.Sumario));
+			Assert.Contains("A oferta de viagem não possui rota ou período válidos.".Normalize(NormalizationForm.FormC),
+							oferta.Erros.Sumario.Normalize(NormalizationForm.FormC));
 			Assert.False(oferta.EhValido);
 		}
 
@@ -62,8 +62,8 @@ namespace JornadaMilhas.Test
 			OfertaViagem oferta = new OfertaViagem(rota, periodo, preco);
 
 			// Assert
-			Assert.Contains(NormalizeString("O preço da oferta de viagem deve ser maior que zero."),
-							NormalizeString(oferta.Erros.Sumario));
+			Assert.Contains("O preço da oferta de viagem deve ser maior que zero.".Normalize(NormalizationForm.FormC),
+							oferta.Erros.Sumario.Normalize(NormalizationForm.FormC));
 			Assert.False(oferta.EhValido);
 		}
 	}
