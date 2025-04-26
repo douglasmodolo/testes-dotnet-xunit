@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,13 +10,34 @@ namespace JornadaMilhasV1.Modelos;
 
 public class OfertaViagem: Valida
 {
-    public int Id { get; set; }
+	public const double DESCONTO_MAXIMO = 0.7; // 70% de desconto
+	private double desconto;
+
+	public int Id { get; set; }
     public Rota Rota { get; set; } 
     public Periodo Periodo { get; set; }
     public double Preco { get; set; }
+	public double Desconto 
+    { 
+        get => desconto;
+        set
+        {
+            desconto = value;
 
+            if (desconto > Preco * DESCONTO_MAXIMO)
+			{
+				desconto = Preco * DESCONTO_MAXIMO; // Limita o desconto a 70% do preço
+			}
+			else if (desconto < 0)
+			{
+				desconto = 0; // Limita o desconto a um valor mínimo de 0
+			}
 
-    public OfertaViagem(Rota rota, Periodo periodo, double preco)
+			Preco -= desconto;
+		}
+    }
+
+	public OfertaViagem(Rota rota, Periodo periodo, double preco)
     {
         Rota = rota;
         Periodo = periodo;
