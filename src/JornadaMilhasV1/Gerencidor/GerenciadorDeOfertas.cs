@@ -65,8 +65,14 @@ public class GerenciadorDeOfertas
 
     }
 
+	public OfertaViagem? RecuperaMaiorDesconto(Func<OfertaViagem, bool> filtro) =>
+	ofertaViagem
+		.Where(filtro)
+		.Where(o => o.Ativa)
+		.OrderBy(o => o.Preco)
+		.FirstOrDefault();
 
-    public void CarregarOfertas()
+	public void CarregarOfertas()
     {
         AdicionarOfertaNaLista(new OfertaViagem(new Rota("São Paulo", "Curitiba"), new Periodo(new DateTime(2024, 1, 15), new DateTime(2024, 1, 20)), 500));
         AdicionarOfertaNaLista(new OfertaViagem(new Rota("Recife", "Rio de Janeiro"), new Periodo(new DateTime(2024, 2, 10), new DateTime(2024, 2, 15)), 700));

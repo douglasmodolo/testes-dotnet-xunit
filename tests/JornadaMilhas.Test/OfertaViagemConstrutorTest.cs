@@ -41,5 +41,22 @@ namespace JornadaMilhas.Test
 							oferta.Erros.Sumario.Normalize(NormalizationForm.FormC));
 			Assert.False(oferta.EhValido);
 		}
+
+		[Fact]
+		public void OfertaViagem_DadosInvalidos_DeveRetornarErro()
+		{
+			// Arrange
+			Rota rota = null;
+			Periodo periodo = new Periodo(new DateTime(2025, 4, 10), new DateTime(2025, 4, 1));
+			double preco = -10;
+
+			int quantidadeEsperada = 3; // Espera-se três erros: rota, período e preço
+
+			// Act
+			OfertaViagem oferta = new OfertaViagem(rota, periodo, preco);
+
+			// Assert
+			Assert.Equal(quantidadeEsperada, oferta.Erros.Count());
+		}
 	}
 }
